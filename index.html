@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        table button {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 0px;
+        }
+        table button:active {
+            background-color: rgb(153, 153, 153);
+            border-color:  rgb(153, 153, 153); ;
+        }
+        table td {
+            width: 50px;
+            height: 40px;
+        }
+        table input {
+            height: 50px;
+            text-align: end;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>계산기</h1>
+    <table border="1">
+        <tr>
+            <td colspan="4"><input type="text" id="inputDisplay"></td>
+        </tr>
+        <tr>
+            <td><button onclick="addData('ce')">ce</button></td>
+            <td><button onclick="addData('/')">/</button></td>
+            <td><button onclick="addData('*')">*</button></td>
+            <td><button onclick="addData('-')">-</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="addData(7)">7</button></td>
+            <td><button onclick="addData(8)">8</button></td>
+            <td><button onclick="addData(9)">9</button></td>
+            <td rowspan="2"><button onclick="addData('+')">+</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="addData(4)">4</button></td>
+            <td><button onclick="addData(5)">5</button></td>
+            <td><button onclick="addData(6)">6</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="addData(1)">1</button></td>
+            <td><button onclick="addData(2)">2</button></td>
+            <td><button onclick="addData(3)">3</button></td>
+            <td rowspan="2"><button onclick="addData('=')">=</button></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button onclick="addData(0)">0</button></td>
+            <td><button onclick="addData('delete')">delete</button></td>
+        </tr>
+    </table>
+    <script>
+        const inputDisplay = document.getElementById("inputDisplay")
+        function deleteLastChar(){
+            inputDisplay.value = inputDisplay.value.substring(0,inputDisplay.value.length-1)
+        }
+        function addData(text) {
+            function checkValid () {
+                const lastChar = inputDisplay.value.charAt(inputDisplay.value.length-1)
+                if(isNaN(lastChar)){
+                    deleteLastChar()
+                }
+                inputDisplay.value += text
+                
+            }
+            switch(text){
+                case '=':
+                    calc()
+                    break
+                case '+':
+                    checkValid('+')
+                    break
+                case '-':
+                    checkValid('-')
+                    break
+                case '/':
+                    checkValid('/')
+                    break
+                case '*':
+                    checkValid('*')
+                    break
+                case 'ce':
+                    inputDisplay.value = ""
+                    break
+                case 'delete':
+                    deleteLastChar()
+                    break
+                default:
+                    inputDisplay.value += text
+            }
+            
+        }
+        function calc(oper) {
+            // const num1 = parseInt(document.getElementById("firstNum").value)
+            // const num2 = parseInt(document.getElementById("secNum").value)
+            // const result = document.getElementById("result")
+            // result.innerText = eval(num1 + oper + num2);
+            const value = inputDisplay.value
+            if(value == "") return
+            const lastChar = value.charAt(value.length-1)
+            if(isNaN(lastChar)){
+                deleteLastChar()
+            }
+            inputDisplay.value = eval(inputDisplay.value)
+        }
+    </script>
+</body>
+</html>
